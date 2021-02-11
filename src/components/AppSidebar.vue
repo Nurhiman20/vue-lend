@@ -4,8 +4,7 @@
     dark
     app
     clipped
-    color="primary"
-    overlay-color="secondary"
+    color="background2"
   >
     <v-list-item class="mb-0 justify-center">
       <v-list-item-content>
@@ -89,10 +88,5 @@ export default {
 <style lang="scss">
 #keep .v-navigation-drawer__border {
   display: none
-}
-
-.v-list .v-list-item--active {
-  color: inherit;
-  background-color: #FB7A66;
 }
 </style>

@@ -2,7 +2,7 @@
   <v-app id="keep">
     <app-sidebar :drawer="drawer"></app-sidebar>
     <v-main class="app-content">
-      <div class="px-6 mb-10">
+      <div class="pa-6 mb-10">
         <router-view></router-view>
       </div>
     </v-main>
@@ -20,6 +20,13 @@ export default {
     drawer: true
   }),
   created() {
+    const dark = localStorage.getItem('darkTheme');
+    
+    if (dark === 'true') {
+      this.$vuetify.theme.dark = true;
+    } else {
+      this.$vuetify.theme.dark = false;
+    }
   }
 }
 </script>
