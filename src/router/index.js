@@ -36,6 +36,22 @@ const routes = [
         }
       }
     ]
+  },
+  {
+    path: '/depositLayout',
+    name: 'DepositLayout',
+    redirect: '/deposit',
+    component: () => import('@/layouts/Home'),
+    children: [
+      {
+        path: '/deposit',
+        name: 'Deposit',
+        component: () => import('@/views/Deposit'),
+        meta: {
+          title: 'Deposit | Vue App'
+        }
+      }
+    ]
   }
 ]
 

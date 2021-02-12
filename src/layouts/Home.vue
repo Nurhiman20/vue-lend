@@ -2,9 +2,19 @@
   <v-app id="keep">
     <app-sidebar :drawer="drawer"></app-sidebar>
     <v-main class="app-content">
-      <div class="pa-6 mb-10">
+      <div class="pa-6">
         <router-view></router-view>
       </div>
+      <v-footer padless color="background darken5">
+        <div class="d-flex justify-end pr-12" style="width: 100%">
+          <v-switch
+            v-model="darkMode"
+            inset
+            label="Dark theme"
+            @change="setDarkTheme"
+          ></v-switch>
+        </div>
+      </v-footer>
     </v-main>
   </v-app>
 </template>
@@ -17,14 +27,23 @@ export default {
     AppSidebar
   },
   data: () => ({
-    drawer: true
+    drawer: true,
+    darkMode: false
   }),
+  methods: {
+    setDarkTheme(val) {
+      this.$vuetify.theme.dark = val;
+      localStorage.setItem('darkTheme', val);
+    }
+  },
   created() {
     const dark = localStorage.getItem('darkTheme');
     
     if (dark === 'true') {
+      this.darkMode = true;
       this.$vuetify.theme.dark = true;
     } else {
+      this.darkMode = false;
       this.$vuetify.theme.dark = false;
     }
   }

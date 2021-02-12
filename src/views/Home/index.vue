@@ -49,14 +49,6 @@
             <p class="my-auto"><span class="font-weight-bold secondary3--text">{{ item.stable_borrow }}</span> %</p>
           </template>
         </v-data-table>
-        <div class="d-flex justify-end mt-1">
-          <v-switch
-            v-model="darkMode"
-            inset
-            label="Dark theme"
-            @change="setDarkTheme"
-          ></v-switch>
-        </div>
       </div>
     </div>
   </div>
@@ -67,7 +59,6 @@ export default {
   data() {
     return {      
       tabActive: null,
-      darkMode: false,
       tabItems: ['USD', 'Native'],
       headers: [
         { text: 'Assets', value: 'assets' },
@@ -145,18 +136,6 @@ export default {
     }
   },
   methods: {
-    setDarkTheme(val) {
-      this.$vuetify.theme.dark = val;
-      localStorage.setItem('darkTheme', val);
-    }
-  },
-  created() {
-    let dark = localStorage.getItem('darkTheme');
-    if (dark === 'true') {
-      this.darkMode = true;
-    } else {
-      this.darkMode = false;
-    }
-  },
+  }
 }
 </script>
