@@ -52,6 +52,22 @@ const routes = [
         }
       }
     ]
+  },
+  {
+    path: '/borrowLayout',
+    name: 'Borrow Layout',
+    redirect: '/borrow',
+    component: () => import('@/layouts/Home'),
+    children: [
+      {
+        path: '/borrow',
+        name: 'Borrow',
+        component: () => import('@/views/Borrow'),
+        meta: {
+          title: 'Borrow | Vue App'
+        }
+      }
+    ]
   }
 ]
 

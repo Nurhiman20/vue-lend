@@ -13,6 +13,11 @@ export const sidebar = [
     icon: 'mdi-piggy-bank-outline', 
     text: 'Deposit',
     to: '/deposit'
+  },
+  { 
+    icon: 'mdi-arrow-top-left-thin-circle-outline', 
+    text: 'Borrow',
+    to: '/borrow'
   }
 ]
 
