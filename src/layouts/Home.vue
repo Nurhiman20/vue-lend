@@ -2,7 +2,7 @@
   <v-app id="keep">
     <app-sidebar :drawer="drawer"></app-sidebar>
     <v-main class="app-content">
-      <div class="pa-6">
+      <div class="px-6 py-3">
         <router-view></router-view>
       </div>
       <v-footer padless color="background darken5">
