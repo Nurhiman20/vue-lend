@@ -138,7 +138,6 @@ export default {
   },
   methods: {
     goToOverview(val) {
-      console.log(val);
       this.$router.push('/home/overview/' + 1);
     }
   }
