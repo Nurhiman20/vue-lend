@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer
-    v-model="drawer"
+    v-model="drawerApp"
     dark
     app
     clipped
@@ -68,10 +68,10 @@ import { sidebar, mainMenu } from '@/router/nav'
 
 export default {
   name: 'AppSidebar',
-  props: ['drawer'],
   data () {
     return {
-      mini: false
+      mini: false,
+      drawerApp: true
     }
   },
   computed: {
