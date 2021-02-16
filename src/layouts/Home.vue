@@ -1,6 +1,6 @@
 <template>
   <v-app id="keep">
-    <app-sidebar :drawer="drawer"></app-sidebar>
+    <app-sidebar></app-sidebar>
     <v-main class="app-content">
       <div class="px-6 py-3">
         <router-view></router-view>
@@ -27,7 +27,6 @@ export default {
     AppSidebar
   },
   data: () => ({
-    drawer: true,
     darkMode: false
   }),
   methods: {
