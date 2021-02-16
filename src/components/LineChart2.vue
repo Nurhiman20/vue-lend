@@ -16,14 +16,14 @@ export default {
         ],
         datasets: [
           {
-            label: 'Data 1',
+            label: 'Stable',
             data: [2, 10, 5, 9, 0, 6, 20],
             backgroundColor: "transparent",
             borderColor: "#574EC1",
             pointBackgroundColor: "#574EC1"
           },
           {
-            label: 'Data 2',
+            label: 'Variable',
             data: [5, 3, 6, 8, 3, 5, 12],
             backgroundColor: "transparent",
             borderColor: "#04C9CF",
@@ -39,8 +39,8 @@ export default {
           display: false
         },
         legend: {
-          display: false
-        },
+          position: 'bottom'
+        }
       }
     );
   }
