@@ -26,6 +26,7 @@
           class="elevation-1 overflow-y-auto"
           hide-default-footer
           style="max-height: 65vh;"
+          @click:row="goToOverview"
         >
           <template v-slot:item.assets="{ item }">
             <div class="d-flex flex-row align-center py-3">
@@ -136,6 +137,10 @@ export default {
     }
   },
   methods: {
+    goToOverview(val) {
+      console.log(val);
+      this.$router.push('/home/overview/' + 1);
+    }
   }
 }
 </script>

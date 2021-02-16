@@ -19,6 +19,15 @@ const routes = [
           // requireAuth: true
         }
       },
+      {
+        path: '/home/overview/:idAsset',
+        name: 'Overview Asset',
+        component: () => import('@/views/Home/views/Overview.vue'),
+        meta: {
+          title: 'Overview Asset | Vue App',
+          // requireAuth: true
+        }
+      }
     ]
   },
   {
