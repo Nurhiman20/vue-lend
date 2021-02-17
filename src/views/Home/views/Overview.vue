@@ -15,12 +15,12 @@
         <chart-card :title="'Utilisation Rate'" :color="'#EF3653'"></chart-card>
       </v-col>
       <v-col cols="12" md="7" lg="7" xl="7">
-        <v-card outlined class="primary--text">
+        <v-card flat class="primary--text">
           <v-card-title>Reserve Status & Configuration</v-card-title>
         </v-card>
       </v-col>
       <v-col cols="12" md="5" lg="5" xl="5">
-        <v-card outlined class="primary--text">
+        <v-card flat class="primary--text">
           <v-card-title>Your information</v-card-title>
         </v-card>
       </v-col>

@@ -16,7 +16,7 @@
         </v-row>
       </div>
     </div>
-    <div class="mt-3">
+    <v-card flat class="mt-3">
       <v-tabs
         color="primary accent-4"
         v-model="tabActive"
@@ -33,7 +33,7 @@
           :headers="headers"
           :items="assetsData"
           :search="search"
-          class="elevation-1 overflow-y-auto"
+          class="elevation-1 overflow-y-auto scrollbar-custom"
           hide-default-footer
           style="max-height: 65vh;"
         >
@@ -54,7 +54,7 @@
           </template>
         </v-data-table>
       </div>
-    </div>
+    </v-card>
   </div>
 </template>
 

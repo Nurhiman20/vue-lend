@@ -7,7 +7,7 @@
         <h1 class="primary--text font-weight-bold mt-n4">$ 2,995,558,554.27</h1>
       </div>
     </div>
-    <div class="mt-3">
+    <v-card flat class="mt-3">
       <v-tabs
         color="primary accent-4"
         v-model="tabActive"
@@ -23,8 +23,9 @@
         <v-data-table
           :headers="headers"
           :items="assetsData"
-          class="elevation-1 overflow-y-auto"
+          class="elevation-1 overflow-y-auto scrollbar-custom"
           hide-default-footer
+          flat
           style="max-height: 65vh;"
           @click:row="goToOverview"
         >
@@ -51,7 +52,7 @@
           </template>
         </v-data-table>
       </div>
-    </div>
+    </v-card>
   </div>
 </template>
 

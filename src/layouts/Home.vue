@@ -2,10 +2,10 @@
   <v-app id="keep">
     <app-sidebar></app-sidebar>
     <v-main class="app-content">
-      <div class="px-6 py-3">
+      <div class="px-6 py-6">
         <router-view></router-view>
       </div>
-      <v-footer padless color="background darken5">
+      <v-footer padless fixed color="background darken5">
         <div class="d-flex justify-end pr-12" style="width: 100%">
           <v-switch
             v-model="darkMode"
@@ -57,16 +57,5 @@ export default {
 }
 #keep .v-navigation-drawer__border {
   display: none
-}
-.logo {
-  .logo-text {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
-    font-size: 20px;
-    color: #3987D5;
-  }
-  img {
-    height: 50px;
-  }
 }
 </style>
