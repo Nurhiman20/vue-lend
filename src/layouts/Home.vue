@@ -1,8 +1,8 @@
 <template>
   <v-app id="keep">
     <app-sidebar></app-sidebar>
-    <v-main class="app-content">
-      <div class="px-6 py-6">
+    <v-main class="app-content pb-12">
+      <div class="px-6 pt-6 pb-12">
         <router-view></router-view>
       </div>
       <v-footer padless fixed color="background darken5">
