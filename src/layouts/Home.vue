@@ -1,6 +1,7 @@
 <template>
   <v-app id="keep">
-    <app-sidebar></app-sidebar>
+    <app-header @hide="hideDrawer" :drawer="drawer" v-if="$vuetify.breakpoint.smAndDown"></app-header>
+    <app-sidebar :drawer="drawer"></app-sidebar>
     <v-main class="app-content pb-12">
       <div class="px-6 pt-6 pb-12">
         <router-view></router-view>
@@ -20,19 +21,25 @@
 </template>
 
 <script>
-import AppSidebar from '@/components/AppSidebar'
+import AppSidebar from '@/components/AppSidebar';
+import AppHeader from '@/components/AppHeader';
 
 export default {
   components: {
-    AppSidebar
+    AppSidebar,
+    AppHeader
   },
   data: () => ({
-    darkMode: false
+    darkMode: false,
+    drawer: true
   }),
   methods: {
     setDarkTheme(val) {
       this.$vuetify.theme.dark = val;
       localStorage.setItem('darkTheme', val);
+    },
+    hideDrawer() {
+      this.drawer = !this.drawer
     }
   },
   created() {

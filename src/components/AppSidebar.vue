@@ -68,10 +68,16 @@ import { sidebar, mainMenu } from '@/router/nav'
 
 export default {
   name: 'AppSidebar',
+  props: ['drawer'],
   data () {
     return {
       mini: false,
       drawerApp: true
+    }
+  },
+  watch: {
+    drawer(val) {
+      this.drawerApp = val;
     }
   },
   computed: {
@@ -81,7 +87,12 @@ export default {
     mainMenuData () {
       return mainMenu
     }
-  }
+  },
+  created() {
+    if (this.$vuetify.breakpoint.smAndDown) {
+      this.drawerApp = false;
+    }
+  },
 }
 </script>
 
