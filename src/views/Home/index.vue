@@ -64,11 +64,10 @@ export default {
       tabItems: ['USD', 'Native'],
       headers: [
         { text: 'Assets', value: 'assets' },
-        { text: 'Market Size', value: 'market_size' },
-        { text: 'Total Borrowed', value: 'total_borrowed' },
-        { text: 'Deposit APY', value: 'deposit_apy' },
-        { text: 'Variable Borrow APR', value: 'variable_borrow' },
-        { text: 'Stable Borrow APR', value: 'stable_borrow' }
+        { text: 'Total Supply', value: 'market_size' },
+        { text: 'Supply APY', value: 'total_borrowed' },
+        { text: 'Total Borrow', value: 'deposit_apy' },
+        { text: 'Borrow APY', value: 'variable_borrow' }
       ],
       assetsData: [
         {

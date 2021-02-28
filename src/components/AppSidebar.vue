@@ -17,10 +17,31 @@
     </v-list-item>
 
     <v-divider class="mx-3 mb-2" />
+      
+    <div class="d-flex justify-center">
+      <v-chip
+        class="ma-3 px-3"
+        color="white"
+        label
+        outlined
+        v-if="$store.state.address !== null"
+      >
+        <v-icon left>
+          mdi-wallet-outline
+        </v-icon>
+        {{ truncate($store.state.address) }}
+      </v-chip>
+      <v-btn outlined color="white" v-else>
+        <v-icon left>
+          mdi-wallet-plus-outline
+        </v-icon>
+        Connect wallet
+      </v-btn>
+    </div>
 
     <v-list
       dense
-      class="lighten-1 mt-4"
+      class="lighten-1 mt-2"
     >
       <template v-for="(item, i) in sidebarData">
         <v-list-item
@@ -86,6 +107,11 @@ export default {
     },
     mainMenuData () {
       return mainMenu
+    }
+  },
+  methods: {
+    truncate(str){
+      return (str.length > 9) ? str.substr(0, 8) + '...' + str.substr(str.length - 8, str.length - 1): str;
     }
   },
   created() {

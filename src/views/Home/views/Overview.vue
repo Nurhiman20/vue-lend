@@ -9,10 +9,10 @@
     </div>
     <v-row>
       <v-col cols="12" md="4" lg="4" xl="4">
-        <chart-card :title="'Stable vs Variable APR'"></chart-card>
+        <chart-card :title="'Deposit APY'" :color="'#574EC1'"></chart-card>
       </v-col>
       <v-col cols="12" md="4" lg="4" xl="4">
-        <chart-card :title="'Deposit APY'" :color="'#FE9900'"></chart-card>
+        <chart-card :title="'Borrow APY'" :color="'#FE9900'"></chart-card>
       </v-col>
       <v-col cols="12" md="4" lg="4" xl="4">
         <chart-card :title="'Utilisation Rate'" :color="'#EF3653'"></chart-card>

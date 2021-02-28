@@ -46,7 +46,7 @@
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-col cols="12" md="4" lg="4" xl="4" align="center">
+        <!-- <v-col cols="12" md="4" lg="4" xl="4" align="center">
           <v-card outlined class="pa-3">
             <div class="d-flex flex-column">
               <p class="mb-2 secondary2--text">Deposit</p>
@@ -61,8 +61,8 @@
               </div>
             </div>
           </v-card>
-        </v-col>
-        <v-col cols="12" md="4" lg="4" xl="4" align="center">
+        </v-col> -->
+        <v-col cols="12" md="6" lg="6" xl="6" align="center">
           <v-card outlined class="pa-3">
             <div class="d-flex flex-column">
               <p class="mb-2 secondary--text">Deposit</p>
@@ -78,7 +78,7 @@
             </div>
           </v-card>
         </v-col>
-        <v-col cols="12" md="4" lg="4" xl="4" align="center">
+        <v-col cols="12" md="6" lg="6" xl="6" align="center">
           <v-card outlined class="pa-3">
             <div class="d-flex flex-column">
               <p class="mb-2 primary--text">Variable Borrowing</p>
@@ -87,10 +87,10 @@
                 <p>Deposit APR</p>
                 <p class="text-bold">7.04%</p>
               </div>
-              <div class="d-flex flex-row justify-space-between">
+              <!-- <div class="d-flex flex-row justify-space-between">
                 <p>Past 30D Avg.</p>
                 <p class="text-bold">-</p>
-              </div>
+              </div> -->
               <div class="d-flex flex-row justify-space-between">
                 <p>% over total</p>
                 <p class="text-bold">9.96%</p>
@@ -98,7 +98,7 @@
             </div>
           </v-card>
         </v-col>
-        <v-col cols="6" md="2" lg="2" xl="2" align="center">
+        <!-- <v-col cols="6" md="2" lg="2" xl="2" align="center">
           <div class="d-flex flex-column">
             <p>Maximum LTV</p>
             <p class="text-bold mt-n3">75.00 %</p>
@@ -115,7 +115,7 @@
             <p>Liquidation penalty</p>
             <p class="text-bold mt-n3">75.00 %</p>
           </div>
-        </v-col>
+        </v-col> -->
         <v-col cols="6" md="2" lg="2" xl="2" align="center">
           <div class="d-flex flex-column">
             <p>Used as collateral</p>
