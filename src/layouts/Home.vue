@@ -1,6 +1,6 @@
 <template>
   <v-app id="keep">
-    <app-header @hide="hideDrawer" :drawer="drawer" v-if="$vuetify.breakpoint.smAndDown"></app-header>
+    <app-header @hide="hideDrawer" :drawer="drawer" v-if="$vuetify.breakpoint.mdAndDown"></app-header>
     <app-sidebar :drawer="drawer"></app-sidebar>
     <v-main class="app-content pb-12">
       <div class="px-6 pt-6 pb-12">

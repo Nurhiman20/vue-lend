@@ -3,12 +3,20 @@
     app
     clipped-left
     dark
-    color="primary"
+    color="background2"
     height="50px"
   >
     <div class="logo d-flex align-center">
-      <strong class="font-weight-black">Vue</strong>
-      <span>App</span>
+      <div class="d-flex flex-row align-center mx-auto">
+        <v-img src="@/assets/img/logo/logo.png" max-width="30" contain class="mr-1"></v-img>
+        <div class="d-flex flex-column mt-3">
+          <div class="d-flex flex-row">
+            <strong class="mr-1 font-weight-black">RICE</strong>
+            <span>TRON</span>
+          </div>
+          <p class="logo-text text-right mt-n2">DeFi</p>
+        </div>
+      </div>
     </div>
     <v-spacer></v-spacer>
     <div class="d-flex flex-row justify-end align-center">

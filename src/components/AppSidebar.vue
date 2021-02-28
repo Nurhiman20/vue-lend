@@ -8,10 +8,17 @@
   >
     <v-list-item class="mb-0 justify-center">
       <v-list-item-content>
-        <v-list-item-title class="text-h4 text-center">
-          <strong class="mr-1 font-weight-black">Vue</strong>
-
-          <span>App</span>
+        <v-list-item-title class="d-flex text-h4">
+          <div class="d-flex flex-row align-center mx-auto">
+            <v-img src="@/assets/img/logo/logo.png" max-width="50" contain class="mt-n3 mr-1"></v-img>
+            <div class="d-flex flex-column">
+              <div class="d-flex flex-row">
+                <strong class="mr-1 font-weight-black">RICE</strong>
+                <span>TRON</span>
+              </div>
+              <p class="logo-text text-right mt-n2">DeFi</p>
+            </div>
+          </div>
         </v-list-item-title>
       </v-list-item-content>
     </v-list-item>
@@ -21,7 +28,7 @@
     <div class="d-flex justify-center">
       <v-chip
         class="ma-3 px-3"
-        color="white"
+        color="secondary"
         label
         outlined
         v-if="$store.state.address !== null"
@@ -31,7 +38,7 @@
         </v-icon>
         {{ truncate($store.state.address) }}
       </v-chip>
-      <v-btn outlined color="white" v-else>
+      <v-btn outlined color="secondary" v-else>
         <v-icon left>
           mdi-wallet-plus-outline
         </v-icon>
@@ -50,7 +57,7 @@
           :to="item.to"
         >
           <v-list-item-action>
-            <v-icon color="accent">{{ item.icon }}</v-icon>
+            <v-icon color="secondary">{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-title style="margin-left:-15px">
             {{ item.text }}
@@ -115,7 +122,7 @@ export default {
     }
   },
   created() {
-    if (this.$vuetify.breakpoint.smAndDown) {
+    if (this.$vuetify.breakpoint.mdAndDown) {
       this.drawerApp = false;
     }
   },
@@ -125,5 +132,9 @@ export default {
 <style lang="scss">
 #keep .v-navigation-drawer__border {
   display: none
+}
+
+.logo-text {
+  font-size: 0.5em;
 }
 </style>

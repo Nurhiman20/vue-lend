@@ -11,8 +11,9 @@ export default new Vuetify({
   theme: {
     themes: {
       light: {
-        primary: '#574EC1',
-        secondary: '#04C9CF',
+        primary: '#09AD14',
+        secondary: '#edd70e',        
+        // secondary: '#04C9CF',
         secondary2: '#FE9900',
         secondary3: '#EF3653',
         accent: '#FFFFFF',
@@ -21,11 +22,11 @@ export default new Vuetify({
         success: '#4CAF50',
         warning: '#FFC107',
         background: '#F1F2F7',
-        background2: '#574EC1'
+        background2: '#09AD14'
       },
       dark: {
-        primary: '#574EC1',
-        secondary: '#04C9CF',
+        primary: '#09AD14',
+        secondary: '#edd70e',  
         secondary2: '#FE9900',
         secondary3: '#EF3653',
         accent: '#574EC1',
