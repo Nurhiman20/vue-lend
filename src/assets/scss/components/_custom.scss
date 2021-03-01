@@ -28,6 +28,17 @@
   border-radius: 10px !important;
 }
 
+p.break-word {
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.break-word {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
 // scrollbar 
 .scrollbar-custom::-webkit-scrollbar {
 	width: 5px;

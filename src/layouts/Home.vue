@@ -1,7 +1,7 @@
 <template>
   <v-app id="keep">
     <app-header @hide="hideDrawer" :drawer="drawer" v-if="$vuetify.breakpoint.mdAndDown"></app-header>
-    <app-sidebar :drawer="drawer"></app-sidebar>
+    <app-sidebar :drawer="drawer" @connect="showLoginDialog"></app-sidebar>
     <v-main class="app-content pb-12">
       <div class="px-6 pt-6 pb-12">
         <router-view></router-view>
@@ -17,21 +17,26 @@
         </div>
       </v-footer>
     </v-main>
+
+    <login-dialog :show="login" @close="closeLogin"></login-dialog>
   </v-app>
 </template>
 
 <script>
 import AppSidebar from '@/components/AppSidebar';
 import AppHeader from '@/components/AppHeader';
+import LoginDialog from '@/components/LoginDialog';
 
 export default {
   components: {
     AppSidebar,
-    AppHeader
+    AppHeader,
+    LoginDialog
   },
   data: () => ({
     darkMode: false,
-    drawer: true
+    drawer: true,
+    login: false
   }),
   methods: {
     setDarkTheme(val) {
@@ -40,6 +45,12 @@ export default {
     },
     hideDrawer() {
       this.drawer = !this.drawer
+    },
+    closeLogin(e) {
+      this.login = e;
+    },
+    showLoginDialog(e) {
+      this.login = e;
     }
   },
   created() {

@@ -22,7 +22,7 @@ export default new Vuetify({
         success: '#4CAF50',
         warning: '#FFC107',
         background: '#F1F2F7',
-        background2: '#09AD14'
+        background2: '#B9BABF'
       },
       dark: {
         primary: '#09AD14',

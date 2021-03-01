@@ -1,7 +1,6 @@
 <template>
   <v-navigation-drawer
     v-model="drawerApp"
-    dark
     app
     clipped
     color="background2"
@@ -25,12 +24,13 @@
 
     <v-divider class="mx-3 mb-2" />
       
-    <div class="d-flex justify-center">
+    <div class="d-flex justify-center mt-6">
       <v-chip
-        class="ma-3 px-3"
-        color="secondary"
+        class="ma-3 px-3 cursor-pointer"
+        color="primary"
         label
         outlined
+        @click="showLogin"
         v-if="$store.state.address !== null"
       >
         <v-icon left>
@@ -38,7 +38,12 @@
         </v-icon>
         {{ truncate($store.state.address) }}
       </v-chip>
-      <v-btn outlined color="secondary" v-else>
+      <v-btn 
+        outlined
+        color="primary"
+        @click="showLogin"
+        v-else
+      >
         <v-icon left>
           mdi-wallet-plus-outline
         </v-icon>
@@ -57,7 +62,7 @@
           :to="item.to"
         >
           <v-list-item-action>
-            <v-icon color="secondary">{{ item.icon }}</v-icon>
+            <v-icon color="primary">{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-title style="margin-left:-15px">
             {{ item.text }}
@@ -119,6 +124,9 @@ export default {
   methods: {
     truncate(str){
       return (str.length > 9) ? str.substr(0, 8) + '...' + str.substr(str.length - 8, str.length - 1): str;
+    },
+    showLogin() {
+      this.$emit("connect", true);
     }
   },
   created() {
