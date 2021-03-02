@@ -8,7 +8,9 @@ Vue.use(Vuex);
 
 const state = {
   address: null,
-  tronWeb: null
+  contractAddress: 'TQFqUGwHcNowXpkRvWaQ2jHJf9shGDhtt2',
+  tronWeb: null,
+  listPool: []
 }
 
 export default new Vuex.Store({

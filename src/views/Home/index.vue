@@ -8,17 +8,6 @@
       </div>
     </div>
     <v-card flat class="mt-3">
-      <v-tabs
-        color="primary accent-4"
-        v-model="tabActive"
-      >
-        <v-tab
-          v-for="item in tabItems"
-          :key="item"
-        >
-          {{ item }}
-        </v-tab>
-      </v-tabs>
       <div>
         <v-data-table
           :headers="headers"
@@ -28,27 +17,25 @@
           flat
           style="max-height: 65vh;"
           @click:row="goToOverview"
+          :loading="loading"
         >
-          <template v-slot:item.assets="{ item }">
+          <template v-slot:item.id="{ item }">
             <div class="d-flex flex-row align-center py-3">
               <v-img :src="item.image" :aspect-ratio="1" max-width="35" max-height="35" contain></v-img>
-              <p class="ml-2 my-auto">{{ item.assets }}</p>
+              <p class="ml-2 my-auto">{{ item.id }}</p>
             </div>
           </template>
-          <template v-slot:item.market_size="{ item }">
-            <p class="font-weight-bold my-auto">{{ item.market_size }}</p>
+          <template v-slot:item.total_supply="{ item }">
+            <p class="font-weight-bold my-auto">{{ formatCurrency(item.total_supply) }}</p>
           </template>
-          <template v-slot:item.total_borrowed="{ item }">
-            <p class="font-weight-bold my-auto">{{ item.total_borrowed }}</p>
+          <template v-slot:item.total_borrow="{ item }">
+            <p class="font-weight-bold my-auto">{{ formatCurrency(item.total_borrow) }}</p>
           </template>
-          <template v-slot:item.deposit_apy="{ item }">
-            <p class="my-auto"><span class="font-weight-bold secondary2--text">{{ item.deposit_apy }}</span> %</p>
+          <template v-slot:item.supply_apy="{ item }">
+            <p class="my-auto"><span class="font-weight-bold secondary2--text">{{ item.supply_apy }}</span> %</p>
           </template>
-          <template v-slot:item.variable_borrow="{ item }">
-            <p class="my-auto"><span class="font-weight-bold secondary--text">{{ item.variable_borrow }}</span> %</p>
-          </template>
-          <template v-slot:item.stable_borrow="{ item }">
-            <p class="my-auto"><span class="font-weight-bold secondary3--text">{{ item.stable_borrow }}</span> %</p>
+          <template v-slot:item.borrow_apy="{ item }">
+            <p class="my-auto"><span class="font-weight-bold secondary3--text">{{ item.borrow_apy }}</span> %</p>
           </template>
         </v-data-table>
       </div>
@@ -57,90 +44,98 @@
 </template>
 
 <script>
+import TronWeb from 'tronweb';
+
 export default {
   data() {
     return {      
       tabActive: null,
       tabItems: ['USD', 'Native'],
       headers: [
-        { text: 'Assets', value: 'assets' },
-        { text: 'Total Supply', value: 'market_size' },
-        { text: 'Supply APY', value: 'total_borrowed' },
-        { text: 'Total Borrow', value: 'deposit_apy' },
-        { text: 'Borrow APY', value: 'variable_borrow' }
+        { text: 'Assets', value: 'id' },
+        { text: 'Total Supply', value: 'total_supply' },
+        { text: 'Supply APY', value: 'supply_apy' },
+        { text: 'Total Borrow', value: 'total_borrow' },
+        { text: 'Borrow APY', value: 'borrow_apy' }
       ],
-      assetsData: [
-        {
-          image: require('@/assets/img/usdt.svg'),
-          assets: 'USDT Coin (USDT)',
-          market_size: '$96.74M',
-          total_borrowed: '$78.33M',
-          deposit_apy: '7.74',
-          variable_borrow: '15.29',
-          stable_borrow: '16.79'
-        },
-        {
-          image: require('@/assets/img/dai.svg'),
-          assets: 'DAI',
-          market_size: '$96.22M',
-          total_borrowed: '$77.88M',
-          deposit_apy: '7.71',
-          variable_borrow: '15.08',
-          stable_borrow: '16.58'
-        },
-        {
-          image: require('@/assets/img/usdc.svg'),
-          assets: 'USD Coin (USDC)',
-          market_size: '$96.74',
-          total_borrowed: '$78.33',
-          deposit_apy: '7.74',
-          variable_borrow: '15.29',
-          stable_borrow: '16.79'
-        },
-        {
-          image: require('@/assets/img/tusd.svg'),
-          assets: 'TrueUSD (TUSD)',
-          market_size: '$96.74',
-          total_borrowed: '$78.33',
-          deposit_apy: '7.74',
-          variable_borrow: '15.29',
-          stable_borrow: '16.79'
-        },
-        {
-          image: require('@/assets/img/susd.svg'),
-          assets: 'sUSD',
-          market_size: '$96.74',
-          total_borrowed: '$78.33',
-          deposit_apy: '7.74',
-          variable_borrow: '15.29',
-          stable_borrow: '16.79'
-        },
-        {
-          image: require('@/assets/img/busd.svg'),
-          assets: 'Binance USD (BUSD)',
-          market_size: '$96.74',
-          total_borrowed: '$78.33',
-          deposit_apy: '7.74',
-          variable_borrow: '15.29',
-          stable_borrow: '16.79'
-        },
-        {
-          image: require('@/assets/img/eth.svg'),
-          assets: 'Ethereum (ETH)',
-          market_size: '$96.74',
-          total_borrowed: '$78.33',
-          deposit_apy: '7.74',
-          variable_borrow: '15.29',
-          stable_borrow: '16.79'
-        }
-      ]
+      assetsData: [],
+      loading: false
     }
   },
   methods: {
-    goToOverview(val) {
-      console.log(val);
+    formatCurrency(val) {
+      return val.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
+    },
+    goToOverview() {
       this.$router.push('/home/overview/' + 1);
+    },
+    getImage(id) {
+      if (id === 'TRX') {
+        return '@/assets/img/trx.png'
+      } else if (id === 'RET') {
+        return '@/assets/img/ret.png'
+      } else if (id === 'BTC') {
+        return '@/assets/img/btc.png'
+      } else if (id === 'USDT') {
+        return '@/assets/img/usdt.png'
+      } else {
+        return '@/assets/img/ric.png'
+      }
+    },
+    async callpool() {
+      this.loading = true;
+      const tronWeb = new TronWeb({
+        fullHost: 'https://nile.trongrid.io',
+        privateKey: 'f91e3a1a982b274618c8c2e5a5399601095fea607b1c47e7f3cd3bdeb173cab8'
+      })
+
+      let instance = await tronWeb.contract().at(this.$store.state.contractAddress);
+
+      let listPool = [];
+
+      let trxpool = await instance._tokenID(0).call();
+      listPool.push(trxpool);
+      let retpool = await instance._tokenID(1).call();
+      listPool.push(retpool);
+      let ricpool = await instance._tokenID(2).call();
+      listPool.push(ricpool);
+      let usdtpool = await instance._tokenID(3).call();
+      listPool.push(usdtpool);
+      let btcpool = await instance._tokenID(4).call();
+      listPool.push(btcpool);
+      // let ethpool = await instance._tokenID(5).call();
+      // listPool.push(ethpool);
+
+      let fixedPool = [];
+      listPool.forEach(pool => {
+        let dataPool = {
+          id: pool.id,
+          image: null,
+          total_supply: tronWeb.toDecimal(pool.totalsupply._hex),
+          supply_apy: tronWeb.toDecimal(pool.supplyinterest._hex) / 100,
+          total_borrow: tronWeb.toDecimal(pool.totalborrow._hex),
+          borrow_apy: tronWeb.toDecimal(pool.borrowinterest._hex) / 100
+        }
+        if (pool.id === 'TRX') {
+          dataPool.image = require('@/assets/img/trx.png');
+        } else if (pool.id === 'RET') {
+          dataPool.image = require('@/assets/img/ret.png');
+        } else if (pool.id === 'BTC') {
+          dataPool.image = require('@/assets/img/btc.png');
+        } else if (pool.id === 'USDT') {
+          dataPool.image = require('@/assets/img/usdt.png');
+        } else if (pool.id === 'RIC') {
+          dataPool.image = require('@/assets/img/ric.png');
+        }
+        fixedPool.push(dataPool);
+      });
+
+      this.assetsData = fixedPool;
+      this.loading = false;
     }
-  }
+  },
+  created() {
+    this.callpool();
+  },
 }
 </script>
