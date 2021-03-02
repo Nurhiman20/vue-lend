@@ -3,7 +3,6 @@
     v-model="drawerApp"
     app
     clipped
-    color="background2"
   >
     <v-list-item class="mb-0 justify-center">
       <v-list-item-content>
