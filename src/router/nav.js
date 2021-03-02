@@ -9,16 +9,16 @@ export const sidebar = [
     text: 'Dashboard',
     to: '/dashboard'
   },
-  { 
-    icon: 'mdi-piggy-bank-outline', 
-    text: 'Deposit',
-    to: '/deposit'
-  },
-  { 
-    icon: 'mdi-arrow-top-left-thin-circle-outline', 
-    text: 'Borrow',
-    to: '/borrow'
-  }
+  // { 
+  //   icon: 'mdi-piggy-bank-outline', 
+  //   text: 'Deposit',
+  //   to: '/deposit'
+  // },
+  // { 
+  //   icon: 'mdi-arrow-top-left-thin-circle-outline', 
+  //   text: 'Borrow',
+  //   to: '/borrow'
+  // }
 ]
 
 export const mainMenu = [

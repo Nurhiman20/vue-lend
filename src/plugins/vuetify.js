@@ -12,7 +12,7 @@ export default new Vuetify({
     themes: {
       light: {
         primary: '#09AD14',
-        secondary: '#edd70e',        
+        secondary: '#F1C40F',        
         // secondary: '#04C9CF',
         secondary2: '#FE9900',
         secondary3: '#EF3653',
@@ -26,7 +26,7 @@ export default new Vuetify({
       },
       dark: {
         primary: '#09AD14',
-        secondary: '#edd70e',  
+        secondary: '#F1C40F',  
         secondary2: '#FE9900',
         secondary3: '#EF3653',
         accent: '#574EC1',
