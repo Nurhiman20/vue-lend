@@ -3,7 +3,7 @@
     <div class="d-flex flex-column flex-md-row justify-space-between">
       <h1 class="primary--text">Dashboard</h1>
     </div>
-    <v-card flat class="mt-3">
+    <v-card flat class="mt-6">
       <div>
         <v-data-table
           :headers="headers"
@@ -12,7 +12,6 @@
           hide-default-footer
           flat
           style="max-height: 65vh;"
-          @click:row="goToOverview"
           :loading="loading"
         >
           <template v-slot:item.id="{ item }">
@@ -27,23 +26,34 @@
           <template v-slot:item.borrow_apy="{ item }">
             <p class="my-auto"><span class="font-weight-bold secondary3--text">{{ item.borrow_apy }}</span> %</p>
           </template>
-          <template v-slot:item.actions="{}">
-            <v-btn color="primary" small>Supply</v-btn>
+          <template v-slot:item.actions="{ item }">
+            <v-btn color="primary" small @click="showSupplyDialog({ condition: true, item: item })">Supply</v-btn>
             <v-btn color="secondary" small class="ml-2">Borrow</v-btn>
           </template>
         </v-data-table>
       </div>
     </v-card>
+
+    <supply-dialog 
+      :show="dialogSupply"
+      :asset="selectedAsset"
+      @close="showSupplyDialog"
+    ></supply-dialog>
   </div>
 </template>
 
 <script>
 import TronWeb from 'tronweb';
+import supplyDialog from './components/NewSupply';
 
 export default {
+  components: {
+    supplyDialog
+  },
   data() {
     return {      
       tabActive: null,
+      selectedAsset: {},
       tabItems: ['USD', 'Native'],
       headers: [
         { text: 'Assets', value: 'id' },
@@ -52,15 +62,13 @@ export default {
         { text: '', value: 'actions', align: 'end' }
       ],
       assetsData: [],
-      loading: false
+      loading: false,
+      dialogSupply: false
     }
   },
   methods: {
     formatCurrency(val) {
       return val.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
-    },
-    goToOverview() {
-      this.$router.push('/home/overview/' + 1);
     },
     getImage(id) {
       if (id === 'TRX') {
@@ -125,6 +133,10 @@ export default {
 
       this.assetsData = fixedPool;
       this.loading = false;
+    },
+    showSupplyDialog(value) {
+      this.dialogSupply = value.condition;
+      this.selectedAsset = value.item;
     }
   },
   created() {
