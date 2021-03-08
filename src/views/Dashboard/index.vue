@@ -28,7 +28,7 @@
           </template>
           <template v-slot:item.actions="{ item }">
             <v-btn color="primary" small @click="showSupplyDialog({ condition: true, item: item })">Supply</v-btn>
-            <v-btn color="secondary" small class="ml-2">Borrow</v-btn>
+            <v-btn color="secondary" small class="ml-2" @click="showBorrowDialog({ condition: true, item: item })">Borrow</v-btn>
           </template>
         </v-data-table>
       </div>
@@ -39,16 +39,24 @@
       :asset="selectedAsset"
       @close="showSupplyDialog"
     ></supply-dialog>
+
+    <borrow-dialog 
+      :show="dialogBorrow"
+      :asset="selectedAsset"
+      @close="showBorrowDialog"
+    ></borrow-dialog>
   </div>
 </template>
 
 <script>
 import TronWeb from 'tronweb';
 import supplyDialog from './components/NewSupply';
+import borrowDialog from './components/NewBorrow';
 
 export default {
   components: {
-    supplyDialog
+    supplyDialog,
+    borrowDialog
   },
   data() {
     return {      
@@ -63,7 +71,8 @@ export default {
       ],
       assetsData: [],
       loading: false,
-      dialogSupply: false
+      dialogSupply: false,
+      dialogBorrow: false
     }
   },
   methods: {
@@ -136,6 +145,10 @@ export default {
     },
     showSupplyDialog(value) {
       this.dialogSupply = value.condition;
+      this.selectedAsset = value.item;
+    },
+    showBorrowDialog(value) {
+      this.dialogBorrow = value.condition;
       this.selectedAsset = value.item;
     }
   },
