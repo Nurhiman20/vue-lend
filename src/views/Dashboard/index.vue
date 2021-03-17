@@ -27,8 +27,17 @@
             <p class="my-auto"><span class="font-weight-bold secondary3--text">{{ item.borrow_apy }}</span> %</p>
           </template>
           <template v-slot:item.actions="{ item }">
-            <v-btn color="primary" small @click="showSupplyDialog({ condition: true, item: item })">Supply</v-btn>
-            <v-btn color="secondary" small class="ml-2" @click="showBorrowDialog({ condition: true, item: item })">Borrow</v-btn>
+            <div class="d-flex flex-row justify-center" v-if="$store.state.address !== null && item.allow_balance === 0">
+              <v-btn class="mx-auto" color="secondary2" dark small @click="approveToken(item.token_address)" :loading="loading">Approve</v-btn>
+            </div>
+            <div class="d-flex flex-row justify-center" v-else-if="$store.state.address !== null && item.allow_balance !== 0">
+              <v-btn color="primary" small @click="showSupplyDialog({ condition: true, item: item })">Supply</v-btn>
+              <v-btn color="secondary" small class="ml-2" @click="showBorrowDialog({ condition: true, item: item })">Borrow</v-btn>
+            </div>
+            <div class="d-flex flex-row justify-center" v-else-if="$store.state.address === null">
+              <v-btn color="primary" small disabled>Supply</v-btn>
+              <v-btn color="secondary" small class="ml-2" disabled>Borrow</v-btn>
+            </div>
           </template>
         </v-data-table>
       </div>
@@ -63,6 +72,7 @@ export default {
       tabActive: null,
       selectedAsset: {},
       tabItems: ['USD', 'Native'],
+      tronWeb: null,
       headers: [
         { text: 'Assets', value: 'id' },
         { text: 'Supply APY', value: 'supply_apy', align: 'end' },
@@ -94,12 +104,12 @@ export default {
     },
     async callpool() {
       this.loading = true;
-      const tronWeb = new TronWeb({
+      this.tronWeb = new TronWeb({
         fullHost: 'https://nile.trongrid.io',
         privateKey: 'f91e3a1a982b274618c8c2e5a5399601095fea607b1c47e7f3cd3bdeb173cab8'
       })
 
-      let instance = await tronWeb.contract().at(this.$store.state.contractAddress);
+      let instance = await this.tronWeb.contract().at(this.$store.state.contractAddress);
 
       let listPool = [];
 
@@ -121,10 +131,10 @@ export default {
         let dataPool = {
           id: pool.id,
           image: null,
-          total_supply: tronWeb.toDecimal(pool.totalsupply._hex),
-          supply_apy: tronWeb.toDecimal(pool.supplyinterest._hex) / 100,
-          total_borrow: tronWeb.toDecimal(pool.totalborrow._hex),
-          borrow_apy: tronWeb.toDecimal(pool.borrowinterest._hex) / 100
+          total_supply: this.tronWeb.toDecimal(pool.totalsupply._hex),
+          supply_apy: this.tronWeb.toDecimal(pool.supplyinterest._hex) / 100,
+          total_borrow: this.tronWeb.toDecimal(pool.totalborrow._hex),
+          borrow_apy: this.tronWeb.toDecimal(pool.borrowinterest._hex) / 100,
         }
         if (pool.id === 'TRX') {
           dataPool.image = require('@/assets/img/trx.png');
@@ -140,7 +150,66 @@ export default {
         fixedPool.push(dataPool);
       });
 
-      this.assetsData = fixedPool;
+      if (this.$store.state.address !== null) {
+        // check approve
+        let instanceRet = await this.tronWeb.contract().at('TVpTrW82SQmBSNd5McDwAg9QuWUFDFQCpo');
+        let allowBalanceRet = await instanceRet.allowance(this.$store.state.address, this.$store.state.contractAddress).call();
+
+        let instanceBtc = await this.tronWeb.contract().at('TDHSehsEis93VmzjSs6ctGLDbMMBa4vyq9');
+        let allowBalanceBtc = await instanceBtc.allowance(this.$store.state.address, this.$store.state.contractAddress).call();
+
+        let instanceUsdt = await this.tronWeb.contract().at('TRGZn68MLabgjL1FAuRgXV6VMjiiLeQDHs');
+        let allowBalanceUsdt = await instanceUsdt.allowance(this.$store.state.address, this.$store.state.contractAddress).call();
+
+        let instanceRic = await this.tronWeb.contract().at('TGR3P7rptivDV5CBy2QKEekrogeCp3YhFa');
+        let allowBalanceRic = await instanceRic.allowance(this.$store.state.address, this.$store.state.contractAddress).call();
+        // end check approve
+
+        let viewPool = [];
+        fixedPool.forEach(pool => {
+          if (pool.id === 'TRX') {
+            pool.token_address = null;
+            pool.allow_balance = 1;
+          } else if (pool.id === 'RET') {
+            pool.token_address = 'TVpTrW82SQmBSNd5McDwAg9QuWUFDFQCpo';
+            pool.allow_balance = this.tronWeb.toDecimal(allowBalanceRet._hex);
+          } else if (pool.id === 'BTC') {
+            pool.token_address = 'TDHSehsEis93VmzjSs6ctGLDbMMBa4vyq9';
+            pool.allow_balance = this.tronWeb.toDecimal(allowBalanceBtc._hex);
+          } else if (pool.id === 'USDT') {
+            pool.token_address = 'TRGZn68MLabgjL1FAuRgXV6VMjiiLeQDHs';
+            pool.allow_balance = this.tronWeb.toDecimal(allowBalanceUsdt._hex);
+          } else if (pool.id === 'RIC') {
+            pool.token_address = 'TGR3P7rptivDV5CBy2QKEekrogeCp3YhFa';
+            pool.allow_balance = this.tronWeb.toDecimal(allowBalanceRic._hex);
+          }
+          viewPool.push(pool);
+        });
+
+        this.assetsData = viewPool;
+      } else {
+        this.assetsData = fixedPool;
+      }
+      
+      this.loading = false;
+    },
+    async approveToken(tokenAddress) {
+      this.loading = true;
+      let instance = await this.tronWeb.contract().at(tokenAddress);
+      let result = await instance.approve(this.$store.state.contractAddress, '115792089237316195423570985008687907853269984665640564039457584007913129639935').send({
+          feeLimit: 100000000, // The maximum SUN consumes by calling this contract method.
+          //callValue: val * 1000000, //in SUN. 1 TRX = 1,000,000 SUN
+          shouldPollResponse: true
+      }).then(res => {
+          console.log(res);
+          console.log(result);
+          this.loading = false;
+        })
+        .catch(err => {
+          console.log(err);
+          this.loading = false;
+        })
+      console.log(result);
       this.loading = false;
     },
     showSupplyDialog(value) {
